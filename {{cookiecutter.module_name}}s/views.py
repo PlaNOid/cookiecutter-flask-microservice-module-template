@@ -10,7 +10,6 @@ from .schemas import FILTER_{{cookiecutter.module_upper_name}}S_SCHEMA, ADD_{{co
 mod = Blueprint('{{cookiecutter.module_name}}s', __name__, url_prefix='/{{cookiecutter.module_name}}s')
 
 
-
 @mod.route('/')
 @use_kwargs(FILTER_{{cookiecutter.module_upper_name}}S_SCHEMA)
 def list_view(page, limit, sort_by):
@@ -22,7 +21,7 @@ def list_view(page, limit, sort_by):
     else:
         sort_by = getattr({{cookiecutter.model_name}}, sort_by)
 
-    q = q.order_by(sort_by).offset((page -1) * limit).limit(limit)
+    q = q.order_by(sort_by).offset((page - 1) * limit).limit(limit)
     return ujsonify(
         results=[i.to_dict() for i in q],
         total=total
