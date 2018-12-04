@@ -7,7 +7,7 @@ from flask_builder import db
 from .models import {{cookiecutter.module_name|capitalize}}
 from .schemas import FILTER_{{cookiecutter.module_name|upper}}S_SCHEMA, ADD_{{cookiecutter.module_name|upper}}_SCHEMA, UPDATE_{{cookiecutter.module_name|upper}}_SCHEMA
 
-mod = Blueprint('{{cookiecutter.module_name}}s', __name__, url_prefix='/{{cookiecutter.module_name}}s')
+mod = Blueprint('{{cookiecutter.module_name|lower}}s', __name__, url_prefix='/{{cookiecutter.module_name|lower}}s')
 
 
 @mod.route('/')
@@ -28,18 +28,18 @@ def list_view(page, limit, sort_by):
     )
 
 
-@mod.route('/<int:{{cookiecutter.module_name}}_id>/')
-def {{cookiecutter.module_name}}_by_id_view({{cookiecutter.module_name}}_id):
-    {{cookiecutter.module_name}} = {{cookiecutter.module_name|capitalize}}.query.filter_by(id={{cookiecutter.module_name}}_id).one()
-    return ujsonify(**{{cookiecutter.module_name}}.to_dict())
+@mod.route('/<int:{{cookiecutter.module_name|lower}}_id>/')
+def {{cookiecutter.module_name|lower}}_by_id_view({{cookiecutter.module_name|lower}}_id):
+    {{cookiecutter.module_name|lower}} = {{cookiecutter.module_name|capitalize}}.query.filter_by(id={{cookiecutter.module_name|lower}}_id).one()
+    return ujsonify(**{{cookiecutter.module_name|lower}}.to_dict())
 
 
 @mod.route('/', methods=['POST'])
 @use_kwargs(ADD_{{cookiecutter.module_name|upper}}_SCHEMA)
-def add_{{cookiecutter.module_name}}_view({{cookiecutter.module_name}}_id=None, **kwargs):
+def add_{{cookiecutter.module_name|lower}}_view({{cookiecutter.module_name|lower}}_id=None, **kwargs):
 
-    if {{cookiecutter.module_name}}_id:
-        i = {{cookiecutter.module_name|capitalize}}.query.filter_by(id={{cookiecutter.module_name}}_id).one()
+    if {{cookiecutter.module_name|lower}}_id:
+        i = {{cookiecutter.module_name|capitalize}}.query.filter_by(id={{cookiecutter.module_name|lower}}_id).one()
         setattrs(i, **kwargs, updated_at=datetime.utcnow())
     else:
         i = {{cookiecutter.module_name|capitalize}}(**kwargs)
@@ -50,15 +50,15 @@ def add_{{cookiecutter.module_name}}_view({{cookiecutter.module_name}}_id=None, 
     return ujsonify(**i.to_dict())
 
 
-@mod.route('/<int:{{cookiecutter.module_name}}_id>/', methods=['PUT'])
+@mod.route('/<int:{{cookiecutter.module_name|lower}}_id>/', methods=['PUT'])
 @use_kwargs(UPDATE_{{cookiecutter.module_name|upper}}_SCHEMA)
-def update_{{cookiecutter.module_name}}_view({{cookiecutter.module_name}}_id, **kwargs):
-    return add_{{cookiecutter.module_name}}_view({{cookiecutter.module_name}}_id, **kwargs)
+def update_{{cookiecutter.module_name|lower}}_view({{cookiecutter.module_name|lower}}_id, **kwargs):
+    return add_{{cookiecutter.module_name|lower}}_view({{cookiecutter.module_name|lower}}_id, **kwargs)
 
 
-@mod.route('/<int:{{cookiecutter.module_name}}_id>/', methods=['DELETE'])
-def delete_{{cookiecutter.module_name}}_view({{cookiecutter.module_name}}_id):
-    i = {{cookiecutter.module_name|capitalize}}.query.filter_by(id={{cookiecutter.module_name}}_id).one()
+@mod.route('/<int:{{cookiecutter.module_name|lower}}_id>/', methods=['DELETE'])
+def delete_{{cookiecutter.module_name|lower}}_view({{cookiecutter.module_name|lower}}_id):
+    i = {{cookiecutter.module_name|capitalize}}.query.filter_by(id={{cookiecutter.module_name|lower}}_id).one()
     db.session.delete(i)
     db.session.commit()
     return 'ok'
