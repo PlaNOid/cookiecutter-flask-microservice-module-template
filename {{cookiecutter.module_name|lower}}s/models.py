@@ -3,8 +3,8 @@ from datetime import datetime
 from sqlalchemy_serializer import SerializerMixin
 
 
-class {{cookiecutter.model_name}}(db.Model, SerializerMixin):
-    __tablename__ = '{{cookiecutter.module_name}}s'
+class {{cookiecutter.module_name|capitalize}}(db.Model, SerializerMixin):
+    __tablename__ = '{{cookiecutter.module_name|lower}}s'
 
     id = db.Column(db.Integer, primary_key=True)
 
