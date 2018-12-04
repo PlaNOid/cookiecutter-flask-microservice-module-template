@@ -1,5 +1,3 @@
 {
-    "module_name": "module name in lowercase",
-    "module_upper_name": "module name in UPPERCASE",
-    "model_name": "model name like Module"
+    "module_name": "module name in lowercase"
 }
