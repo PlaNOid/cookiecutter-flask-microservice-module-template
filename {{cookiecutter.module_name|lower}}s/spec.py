@@ -179,7 +179,7 @@
 
 {{cookiecutter.module_name|upper}}_DELETE = {
     'tags': [
-        '{{cookiecutter.module_name|upper}}S'
+        '{{cookiecutter.module_name|upper}}S',
     ],
     'parameters': [
         {
