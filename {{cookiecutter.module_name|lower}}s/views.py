@@ -1,6 +1,6 @@
 from datetime import datetime
 from flask import Blueprint
-from lib.utils import ujsonify, setattrs
+from lib.utils import setattrs, success
 from webargs.flaskparser import use_kwargs
 from flask_builder import db
 from flasgger import swag_from
@@ -25,7 +25,7 @@ def list_view(page, limit, sort_by):
         sort_by = getattr({{cookiecutter.module_name|capitalize}}, sort_by)
 
     q = q.order_by(sort_by).offset((page - 1) * limit).limit(limit)
-    return ujsonify(
+    return success(
         results=[i.to_dict() for i in q],
         total=total
     )
@@ -35,7 +35,7 @@ def list_view(page, limit, sort_by):
 @swag_from({{cookiecutter.module_name|upper}}_BY_ID)
 def {{cookiecutter.module_name|lower}}_by_id_view({{cookiecutter.module_name|lower}}_id):
     {{cookiecutter.module_name|lower}} = {{cookiecutter.module_name|capitalize}}.query.filter_by(id={{cookiecutter.module_name|lower}}_id).one()
-    return ujsonify(**{{cookiecutter.module_name|lower}}.to_dict())
+    return success(**{{cookiecutter.module_name|lower}}.to_dict())
 
 
 @mod.route('/', methods=['POST'])
@@ -52,7 +52,7 @@ def add_{{cookiecutter.module_name|lower}}_view({{cookiecutter.module_name|lower
 
     db.session.commit()
 
-    return ujsonify(**i.to_dict())
+    return success(**i.to_dict())
 
 
 @mod.route('/<int:{{cookiecutter.module_name|lower}}_id>/', methods=['PUT'])
@@ -68,4 +68,4 @@ def delete_{{cookiecutter.module_name|lower}}_view({{cookiecutter.module_name|lo
     i = {{cookiecutter.module_name|capitalize}}.query.filter_by(id={{cookiecutter.module_name|lower}}_id).one()
     db.session.delete(i)
     db.session.commit()
-    return ujsonify(**i.to_dict())
+    return success(**i.to_dict())
