@@ -42,7 +42,6 @@ def {{cookiecutter.module_name|lower}}_by_id_view({{cookiecutter.module_name|low
 @swag_from({{cookiecutter.module_name|upper}}_CREATE)
 @use_kwargs(ADD_{{cookiecutter.module_name|upper}}_SCHEMA)
 def add_{{cookiecutter.module_name|lower}}_view({{cookiecutter.module_name|lower}}_id=None, **kwargs):
-
     if {{cookiecutter.module_name|lower}}_id:
         i = {{cookiecutter.module_name|capitalize}}.query.filter_by(id={{cookiecutter.module_name|lower}}_id).one()
         setattrs(i, **kwargs, updated_at=datetime.utcnow())
