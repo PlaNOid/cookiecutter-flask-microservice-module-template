@@ -2,7 +2,7 @@ from app.{{cookiecutter.module_name}}s.models import {{cookiecutter.module_name|
 from tests.utils import unpack
 
 
-module_name = {{cookiecutter.module_name|lower}}
+module_name = '{{cookiecutter.module_name|lower}}'
 
 
 def test_create_{{cookiecutter.module_name|lower}}(client):
