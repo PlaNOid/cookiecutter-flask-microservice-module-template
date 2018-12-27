@@ -23,7 +23,7 @@ def list_view(page, limit, sort_by):
 
     q = q.order_by(sort_by).offset((page - 1) * limit).limit(limit)
     return success(
-        results=[i.to_dict() for i in q],
+        results=[{{cookiecutter.module_name|lower}}.to_dict() for {{cookiecutter.module_name|lower}} in q],
         total=total
     )
 
@@ -38,15 +38,15 @@ def {{cookiecutter.module_name|lower}}_by_id_view({{cookiecutter.module_name|low
 @use_kwargs(ADD_{{cookiecutter.module_name|upper}}_SCHEMA)
 def add_{{cookiecutter.module_name|lower}}_view({{cookiecutter.module_name|lower}}_id=None, **kwargs):
     if {{cookiecutter.module_name|lower}}_id:
-        i = {{cookiecutter.module_name|capitalize}}.query.filter_by(id={{cookiecutter.module_name|lower}}_id).one()
-        setattrs(i, **kwargs, updated_at=datetime.utcnow())
+        {{cookiecutter.module_name | lower}} = {{cookiecutter.module_name|capitalize}}.query.filter_by(id={{cookiecutter.module_name|lower}}_id).one()
+        setattrs({{cookiecutter.module_name|lower}}, **kwargs, updated_at=datetime.utcnow())
     else:
-        i = {{cookiecutter.module_name|capitalize}}(**kwargs)
-        db.session.add(i)
+        {{cookiecutter.module_name | lower}} = {{cookiecutter.module_name|capitalize}}(**kwargs)
+        db.session.add({{cookiecutter.module_name|lower}})
 
     db.session.commit()
 
-    return success(**i.to_dict())
+    return success(**{{cookiecutter.module_name|lower}}.to_dict())
 
 
 @mod.route('/<int:{{cookiecutter.module_name|lower}}_id>/', methods=['PUT'])
@@ -57,7 +57,7 @@ def update_{{cookiecutter.module_name|lower}}_view({{cookiecutter.module_name|lo
 
 @mod.route('/<int:{{cookiecutter.module_name|lower}}_id>/', methods=['DELETE'])
 def delete_{{cookiecutter.module_name|lower}}_view({{cookiecutter.module_name|lower}}_id):
-    i = {{cookiecutter.module_name|capitalize}}.query.filter_by(id={{cookiecutter.module_name|lower}}_id).one()
-    db.session.delete(i)
+    {{cookiecutter.module_name | lower}} = {{cookiecutter.module_name|capitalize}}.query.filter_by(id={{cookiecutter.module_name|lower}}_id).one()
+    db.session.delete({{cookiecutter.module_name|lower}})
     db.session.commit()
-    return success(**i.to_dict())
+    return success(**{{cookiecutter.module_name|lower}}.to_dict())
