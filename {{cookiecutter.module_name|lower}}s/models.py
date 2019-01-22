@@ -1,5 +1,6 @@
-from flask_builder import db
 from datetime import datetime
+
+from flask_builder import db
 from sqlalchemy_serializer import SerializerMixin
 
 
