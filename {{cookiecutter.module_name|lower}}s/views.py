@@ -1,17 +1,19 @@
 from datetime import datetime
+
 from flask import Blueprint
-from lib.utils import setattrs, success
-from lib.swagger import use_kwargs
 from flask_builder import db
 
+from lib.swagger import use_kwargs
+from lib.utils import setattrs, success
+
 from .models import {{cookiecutter.module_name|capitalize}}
-from .schemas import FILTER_{{cookiecutter.module_name|upper}}S_SCHEMA, ADD_{{cookiecutter.module_name|upper}}_SCHEMA, UPDATE_{{cookiecutter.module_name|upper}}_SCHEMA
+import .schemas as schemas
 
 mod = Blueprint('{{cookiecutter.module_name|lower}}s', __name__, url_prefix='/{{cookiecutter.module_name|lower}}s')
 
 
 @mod.route('/')
-@use_kwargs(FILTER_{{cookiecutter.module_name|upper}}S_SCHEMA)
+@use_kwargs(schemas.FILTER_{{cookiecutter.module_name|upper}}S_SCHEMA)
 def list_view(page, limit, sort_by):
     q = {{cookiecutter.module_name|capitalize}}.query
     total = q.count()
@@ -35,7 +37,7 @@ def {{cookiecutter.module_name|lower}}_by_id_view({{cookiecutter.module_name|low
 
 
 @mod.route('/', methods=['POST'])
-@use_kwargs(ADD_{{cookiecutter.module_name|upper}}_SCHEMA)
+@use_kwargs(schemas.ADD_{{cookiecutter.module_name|upper}}_SCHEMA)
 def add_{{cookiecutter.module_name|lower}}_view({{cookiecutter.module_name|lower}}_id=None, **kwargs):
     if {{cookiecutter.module_name|lower}}_id:
         {{cookiecutter.module_name | lower}} = {{cookiecutter.module_name|capitalize}}.query.filter_by(id={{cookiecutter.module_name|lower}}_id).one()
@@ -50,7 +52,7 @@ def add_{{cookiecutter.module_name|lower}}_view({{cookiecutter.module_name|lower
 
 
 @mod.route('/<int:{{cookiecutter.module_name|lower}}_id>/', methods=['PUT'])
-@use_kwargs(UPDATE_{{cookiecutter.module_name|upper}}_SCHEMA)
+@use_kwargs(schemas.UPDATE_{{cookiecutter.module_name|upper}}_SCHEMA)
 def update_{{cookiecutter.module_name|lower}}_view({{cookiecutter.module_name|lower}}_id, **kwargs):
     return add_{{cookiecutter.module_name|lower}}_view({{cookiecutter.module_name|lower}}_id, **kwargs)
 
